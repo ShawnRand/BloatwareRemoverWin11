@@ -1,7 +1,7 @@
 # This script removes bloatware from Windows 11 and logs the removed apps to a file
 
 # Define the path to the log file
-$logPath = "$env:USERPROFILE\Desktop\bloatware-removal.log"
+$logPath = "C:\MSFTLogs\bloatware-removal.log"
 
 # Define the list of bloatware to remove with corrected names
 $bloatware = @(
@@ -12,14 +12,11 @@ $bloatware = @(
     "Microsoft.BingWeather"
     "Microsoft.Office.Sway"
     "Microsoft.Office.Desktop"
-    "Microsoft.MicrosoftStickyNotes"
-    "Microsoft.ScreenSketch"
     "Microsoft.MicrosoftSolitaireCollection" # Microsoft Solitaire Collection
     "Microsoft.MixedReality.Portal"
     "Microsoft.People"
     "Microsoft.Windows.Photos"
     "Microsoft.WindowsAlarms"
-    "Microsoft.WindowsCalculator"
     "Microsoft.WindowsCamera"
     "Microsoft.WindowsMaps"
     "Microsoft.WindowsSoundRecorder"
@@ -41,10 +38,9 @@ $bloatware = @(
     "Microsoft.Getstarted" # Get Started
     "Microsoft.MicrosoftOfficeHub"
     "Microsoft.BioEnrollment"
-    "Microsoft.WindowsStore"
     "Microsoft.WindowsPhone"
     "Microsoft.Todos_0.55.42812.0_x64__8wekyb3d8bbwe" # Correct Microsoft To Do
-    "Microsoft.Clipchamp" # Clipchamp
+    "Clipchamp.Clipchamp" # Clipchamp
     "Microsoft.LinkedIn" # LinkedIn
     "Microsoft.549981C3F5F10" # Cortana
     "Microsoft.GetHelp" # Get Help
@@ -58,10 +54,10 @@ $removedApps = @()
 
 # Loop through each bloatware and remove it
 foreach ($app in $bloatware) {
-    $package = Get-AppxPackage -Name $app
+    $package = Get-AppxPackage -Name $app -AllUsers
     if ($package -ne $null) {
         $removedApps += $package.Name
-        $package | Remove-AppxPackage
+        $package | Remove-AppxPackage -AllUsers
     }
 }
 
@@ -69,19 +65,19 @@ foreach ($app in $bloatware) {
 $package = Get-AppxPackage -Name Microsoft.Windows3DViewer
 if ($package -ne $null) {
     $removedApps += $package.Name
-    $package | Remove-AppxPackage
+    $package | Remove-AppxPackage -AllUsers
 }
 
 # Remove the Xbox Game Bar
 $package = Get-AppxPackage -Name Microsoft.XboxGameOverlay
 if ($package -ne $null) {
     $removedApps += $package.Name
-    $package | Remove-AppxPackage
+    $package | Remove-AppxPackage -AllUsers
 }
 $package = Get-AppxPackage -Name Microsoft.XboxGamingOverlay
 if ($package -ne $null) {
     $removedApps += $package.Name
-    $package | Remove-AppxPackage
+    $package | Remove-AppxPackage -AllUsers
 }
 
 # Write the names of the removed apps to the log file
