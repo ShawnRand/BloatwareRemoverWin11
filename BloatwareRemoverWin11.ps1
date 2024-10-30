@@ -74,6 +74,7 @@ if ($package -ne $null) {
     $removedApps += $package.Name
     $package | Remove-AppxPackage -AllUsers
 }
+
 $package = Get-AppxPackage -Name Microsoft.XboxGamingOverlay
 if ($package -ne $null) {
     $removedApps += $package.Name
